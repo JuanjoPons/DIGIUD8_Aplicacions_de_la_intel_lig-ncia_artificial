@@ -1,12 +1,1305 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Aplicacions de la IA</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+<!-- 
+  WEB EDUCATIVA: APLICACIONS DE LA IA
+  Unitat 8 - CFGM Digitalització
+  
+  Per usar a CodePen:
+  1. Copia tot aquest codi a la secció HTML de CodePen
+  2. A Configuració > CSS, afegeix: https://cdn.tailwindcss.com
+  3. A Configuració > JS, afegeix: https://unpkg.com/lucide@latest
+-->
+
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aplicacions de la IA | Unitat 8</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+    
+    :root {
+      --void-black: #050508;
+      --void-dark: #0A0A0F;
+      --neon-cyan: #00D4FF;
+      --neon-blue: #4D9FFF;
+    }
+    
+    * { font-family: 'Inter', sans-serif; }
+    
+    body {
+      background: var(--void-black);
+      color: white;
+    }
+    
+    .gradient-text {
+      background: linear-gradient(90deg, var(--neon-cyan), var(--neon-blue));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    
+    .card-hover {
+      transition: all 0.3s ease;
+    }
+    
+    .card-hover:hover {
+      transform: translateY(-4px);
+      border-color: var(--neon-cyan);
+    }
+    
+    .neon-border {
+      border: 1px solid rgba(0, 212, 255, 0.3);
+    }
+    
+    .neon-border:hover {
+      border-color: var(--neon-cyan);
+    }
+    
+    .section-divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--neon-cyan), transparent);
+    }
+    
+    .idea-clau {
+      background: linear-gradient(90deg, rgba(0, 212, 255, 0.1), transparent);
+      border-left: 3px solid var(--neon-cyan);
+    }
+    
+    .scroll-smooth { scroll-behavior: smooth; }
+    
+    .video-card {
+      aspect-ratio: 16/9;
+      background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(77, 159, 255, 0.1));
+    }
+    
+    .tab-active {
+      background: var(--neon-cyan);
+      color: var(--void-black);
+    }
+    
+    .animate-fade-in {
+      animation: fadeIn 0.6s ease-out;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .grid-pattern {
+      background-image: 
+        linear-gradient(rgba(0, 212, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 212, 255, 0.03) 1px, transparent 1px);
+      background-size: 50px 50px;
+    }
+  </style>
+</head>
+<body class="scroll-smooth">
+
+  <!-- NAVEGACIÓ -->
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-md border-b border-white/10">
+    <div class="max-w-7xl mx-auto px-4 py-3">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <i data-lucide="brain" class="w-6 h-6 text-cyan-400"></i>
+          <span class="font-bold text-lg">Unitat 8</span>
+        </div>
+        <div class="hidden md:flex items-center gap-1">
+          <a href="#intro" class="px-3 py-1.5 text-sm text-white/70 hover:text-cyan-400 transition-colors rounded-lg hover:bg-white/5">Intro</a>
+          <a href="#empreses" class="px-3 py-1.5 text-sm text-white/70 hover:text-cyan-400 transition-colors rounded-lg hover:bg-white/5">Empreses</a>
+          <a href="#aplicacions" class="px-3 py-1.5 text-sm text-white/70 hover:text-cyan-400 transition-colors rounded-lg hover:bg-white/5">Aplicacions</a>
+          <a href="#noves" class="px-3 py-1.5 text-sm text-white/70 hover:text-cyan-400 transition-colors rounded-lg hover:bg-white/5">Noves Funcions</a>
+          <a href="#mercat" class="px-3 py-1.5 text-sm text-white/70 hover:text-cyan-400 transition-colors rounded-lg hover:bg-white/5">Mercat Laboral</a>
+          <a href="#recursos" class="px-3 py-1.5 text-sm text-white/70 hover:text-cyan-400 transition-colors rounded-lg hover:bg-white/5">Recursos</a>
+        </div>
+        <button onclick="toggleMenu()" class="md:hidden p-2">
+          <i data-lucide="menu" class="w-5 h-5"></i>
+        </button>
+      </div>
+      <!-- Mobile menu -->
+      <div id="mobile-menu" class="hidden md:hidden mt-3 pb-3 border-t border-white/10 pt-3">
+        <a href="#intro" class="block py-2 text-white/70 hover:text-cyan-400">Introducció</a>
+        <a href="#empreses" class="block py-2 text-white/70 hover:text-cyan-400">Empreses</a>
+        <a href="#aplicacions" class="block py-2 text-white/70 hover:text-cyan-400">Aplicacions</a>
+        <a href="#noves" class="block py-2 text-white/70 hover:text-cyan-400">Noves Funcions</a>
+        <a href="#mercat" class="block py-2 text-white/70 hover:text-cyan-400">Mercat Laboral</a>
+        <a href="#recursos" class="block py-2 text-white/70 hover:text-cyan-400">Recursos</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="min-h-screen flex items-center justify-center relative grid-pattern pt-16">
+    <div class="absolute inset-0 bg-gradient-to-b from-transparent via-black/50 to-black"></div>
+    <div class="relative z-10 text-center px-4 max-w-4xl mx-auto">
+      <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-500/10 border border-cyan-500/30 mb-6">
+        <i data-lucide="cpu" class="w-4 h-4 text-cyan-400"></i>
+        <span class="text-sm text-cyan-400 font-medium">CFGM Digitalització</span>
+      </div>
+      <h1 class="text-5xl md:text-7xl font-extrabold mb-6 leading-tight">
+        Aplicacions de la <span class="gradient-text">Intel·ligència Artificial</span>
+      </h1>
+      <p class="text-xl text-white/70 mb-8 max-w-2xl mx-auto">
+        Descobreix com la IA està transformant el món empresarial, professional i el nostre dia a dia.
+      </p>
+      <div class="flex flex-wrap justify-center gap-4">
+        <a href="#intro" class="px-6 py-3 bg-cyan-500 text-black font-semibold rounded-xl hover:bg-cyan-400 transition-colors flex items-center gap-2">
+          <i data-lucide="book-open" class="w-5 h-5"></i>
+          Començar
+        </a>
+        <a href="#recursos" class="px-6 py-3 border border-white/20 text-white rounded-xl hover:bg-white/5 transition-colors flex items-center gap-2">
+          <i data-lucide="play-circle" class="w-5 h-5"></i>
+          Vídeos
+        </a>
+      </div>
+    </div>
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
+      <i data-lucide="chevron-down" class="w-6 h-6 text-white/50"></i>
+    </div>
+  </header>
+
+  <!-- 0. INTRODUCCIÓ -->
+  <section id="intro" class="py-20 px-4">
+    <div class="max-w-5xl mx-auto">
+      <div class="mb-8">
+        <span class="text-cyan-400 text-sm font-mono tracking-wider">0. INTRODUCCIÓ</span>
+        <h2 class="text-4xl font-bold mt-2">La Revolució de la <span class="gradient-text">Intel·ligència Artificial</span></h2>
+      </div>
+      
+      <div class="bg-white/5 border border-white/10 rounded-2xl p-8 mb-8">
+        <div class="flex items-start gap-4">
+          <div class="p-3 bg-cyan-500/10 rounded-xl">
+            <i data-lucide="brain" class="w-8 h-8 text-cyan-400"></i>
+          </div>
+          <div>
+            <h3 class="text-2xl font-bold mb-3">Què és la IA?</h3>
+            <p class="text-white/70 leading-relaxed">
+              La <strong class="text-cyan-400">intel·ligència artificial</strong> està experimentant un avanç notable en els últims anys a causa de les millores en els algorismes, a l'accés a grans conjunts de dades (Big Data) que poden ser utilitzats per al seu aprenentatge, a l'augment de la capacitat computacional i als avenços en tècniques d'<strong>aprenentatge profund (deep learning)</strong>.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="idea-clau rounded-r-xl p-6 mb-8">
+        <div class="flex items-center gap-2 mb-3">
+          <i data-lucide="lightbulb" class="w-5 h-5 text-cyan-400"></i>
+          <h4 class="font-bold text-lg">Idea Clau</h4>
+        </div>
+        <p class="text-white/80">
+          La integració de la IA en les diferents <strong>tecnologies de la informació i la comunicació (TIC)</strong> ha contribuït a la seva ràpida incorporació en diversos sectors, potenciant la seva aplicabilitat i generant avenços significatius en àrees com la <strong>salut</strong>, la <strong>indústria</strong>, l'<strong>educació</strong>, el <strong>màrqueting</strong> i l'<strong>entreteniment</strong>.
+        </p>
+      </div>
+
+      <h3 class="text-xl font-bold mb-4 flex items-center gap-2">
+        <i data-lucide="book-open" class="w-6 h-6 text-cyan-400"></i>
+        Què estudiaràs?
+      </h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="bg-white/5 rounded-xl p-4 flex items-start gap-4 card-hover border border-transparent">
+          <span class="w-10 h-10 bg-cyan-500/20 text-cyan-400 rounded-lg flex items-center justify-center font-bold">1</span>
+          <div>
+            <h4 class="font-semibold">Utilitzen les empreses la IA?</h4>
+            <p class="text-sm text-white/60">Aplicacions en diferents camps professionals</p>
+          </div>
+        </div>
+        <div class="bg-white/5 rounded-xl p-4 flex items-start gap-4 card-hover border border-transparent">
+          <span class="w-10 h-10 bg-cyan-500/20 text-cyan-400 rounded-lg flex items-center justify-center font-bold">2</span>
+          <div>
+            <h4 class="font-semibold">Aplicacions de la IA</h4>
+            <p class="text-sm text-white/60">Robòtica, IoT, Biometria, RV/RA, Blockchain</p>
+          </div>
+        </div>
+        <div class="bg-white/5 rounded-xl p-4 flex items-start gap-4 card-hover border border-transparent">
+          <span class="w-10 h-10 bg-cyan-500/20 text-cyan-400 rounded-lg flex items-center justify-center font-bold">3</span>
+          <div>
+            <h4 class="font-semibold">Noves funcionalitats</h4>
+            <p class="text-sm text-white/60">IA empàtica, creativa i generativa</p>
+          </div>
+        </div>
+        <div class="bg-white/5 rounded-xl p-4 flex items-start gap-4 card-hover border border-transparent">
+          <span class="w-10 h-10 bg-cyan-500/20 text-cyan-400 rounded-lg flex items-center justify-center font-bold">4</span>
+          <div>
+            <h4 class="font-semibold">Canvis en el mercat laboral</h4>
+            <p class="text-sm text-white/60">Impacte i futur del treball amb IA</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-8 bg-gradient-to-br from-cyan-500/10 to-blue-500/10 border border-cyan-500/30 rounded-2xl p-6">
+        <h4 class="font-bold mb-3 flex items-center gap-2">
+          <span class="text-cyan-400">💭</span> Pregunta de Reflexió
+        </h4>
+        <p class="text-white/80 italic">
+          "L'interès per la IA va sorgir fa gairebé un segle. La idea no era substituir a les persones, sinó <strong class="text-cyan-400">col·laborar amb elles</strong> per facilitar-les part de les seves tasques."
+        </p>
+        <p class="text-white/60 mt-3 text-sm">
+          Reflexiona: Quines tasques del teu dia a dia creus que podrien beneficiar-se de l'ajuda de la IA?
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider max-w-5xl mx-auto"></div>
+
+  <!-- 1. EMPRESES -->
+  <section id="empreses" class="py-20 px-4">
+    <div class="max-w-5xl mx-auto">
+      <div class="mb-8">
+        <span class="text-cyan-400 text-sm font-mono tracking-wider">1. UTILITZEN LES EMPRESES LA IA?</span>
+        <h2 class="text-4xl font-bold mt-2">La IA en el <span class="gradient-text">Món Empresarial</span></h2>
+        <p class="text-white/70 mt-4 text-lg">
+          T'has aturat a pensar en totes les àrees on la IA ja és una realitat? Assistentes virtuals, sistemes de recomanació, reconeixement de veu, traducció automàtica...
+        </p>
+      </div>
+
+      <!-- 1.1 -->
+      <div class="mb-12">
+        <h3 class="text-2xl font-bold mb-6 flex items-center gap-3">
+          <span class="w-8 h-8 bg-cyan-500/20 text-cyan-400 rounded-lg flex items-center justify-center text-sm">1.1</span>
+          La IA en diferents camps professionals
+        </h3>
+        
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div class="bg-white/5 border border-white/10 rounded-xl p-5 card-hover">
+            <div class="w-12 h-12 bg-gradient-to-br from-pink-500 to-rose-500 rounded-lg flex items-center justify-center mb-4">
+              <i data-lucide="camera" class="w-6 h-6 text-white"></i>
+            </div>
+            <h4 class="font-bold mb-2">Fotografia</h4>
+            <p class="text-sm text-white/60">Huawei integra IA per estabilitzar imatges, enfocament automàtic i reconeixement d'escenes.</p>
+          </div>
+          <div class="bg-white/5 border border-white/10 rounded-xl p-5 card-hover">
+            <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-lg flex items-center justify-center mb-4">
+              <i data-lucide="message-circle" class="w-6 h-6 text-white"></i>
+            </div>
+            <h4 class="font-bold mb-2">Xarxes Socials</h4>
+            <p class="text-sm text-white/60">Rastreig de missatges per suggerir contingut del teu interès.</p>
+          </div>
+          <div class="bg-white/5 border border-white/10 rounded-xl p-5 card-hover">
+            <div class="w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-500 rounded-lg flex items-center justify-center mb-4">
+              <i data-lucide="map-pin" class="w-6 h-6 text-white"></i>
+            </div>
+            <h4 class="font-bold mb-2">Mapes i Navegació</h4>
+            <p class="text-sm text-white/60">Alertes d'embús, rutes alternatives i serveis com Cabify.</p>
+          </div>
+          <div class="bg-white/5 border border-white/10 rounded-xl p-5 card-hover">
+            <div class="w-12 h-12 bg-gradient-to-br from-red-500 to-orange-500 rounded-lg flex items-center justify-center mb-4">
+              <i data-lucide="shopping-bag" class="w-6 h-6 text-white"></i>
+            </div>
+            <h4 class="font-bold mb-2">Recomanacions</h4>
+            <p class="text-sm text-white/60">Netflix, Amazon i YouTube fan suggeriments basats en els teus interessos.</p>
+          </div>
+          <div class="bg-white/5 border border-white/10 rounded-xl p-5 card-hover">
+            <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-violet-500 rounded-lg flex items-center justify-center mb-4">
+              <i data-lucide="scan-face" class="w-6 h-6 text-white"></i>
+            </div>
+            <h4 class="font-bold mb-2">Reconeixement Facial</h4>
+            <p class="text-sm text-white/60">Desbloqueig de mòbils, ordinadors i validació en aeroports.</p>
+          </div>
+          <div class="bg-white/5 border border-white/10 rounded-xl p-5 card-hover">
+            <div class="w-12 h-12 bg-gradient-to-br from-yellow-500 to-amber-500 rounded-lg flex items-center justify-center mb-4">
+              <i data-lucide="gamepad-2" class="w-6 h-6 text-white"></i>
+            </div>
+            <h4 class="font-bold mb-2">Videojocs</h4>
+            <p class="text-sm text-white/60">Dificultat dinàmica, detecció de trampes i escenaris procedimentals.</p>
+          </div>
+          <div class="bg-white/5 border border-white/10 rounded-xl p-5 card-hover">
+            <div class="w-12 h-12 bg-gradient-to-br from-indigo-500 to-blue-500 rounded-lg flex items-center justify-center mb-4">
+              <i data-lucide="pen-tool" class="w-6 h-6 text-white"></i>
+            </div>
+            <h4 class="font-bold mb-2">Escriptura</h4>
+            <p class="text-sm text-white/60">Correctors ortogràfics amb predicció de text.</p>
+          </div>
+          <div class="bg-white/5 border border-white/10 rounded-xl p-5 card-hover">
+            <div class="w-12 h-12 bg-gradient-to-br from-teal-500 to-cyan-500 rounded-lg flex items-center justify-center mb-4">
+              <i data-lucide="car" class="w-6 h-6 text-white"></i>
+            </div>
+            <h4 class="font-bold mb-2">Vehicles Autònoms</h4>
+            <p class="text-sm text-white/60">Trens sense conductor, drones autònoms i pròximament cotxes i avions.</p>
+          </div>
+        </div>
+
+        <div class="idea-clau rounded-r-xl p-6 mt-6">
+          <p class="text-white/80">
+            <strong class="text-cyan-400">Idea Clau:</strong> Malgrat aquests impressionants avenços, la IA encara manca de qualitats netament humanes, com la <strong>creativitat</strong> i l'<strong>emoció</strong>. Això fa difícil la seva aplicació a camps com la salut mental o la creació artística.
+          </p>
+        </div>
+      </div>
+
+      <!-- 1.2 -->
+      <div class="mb-12">
+        <h3 class="text-2xl font-bold mb-6 flex items-center gap-3">
+          <span class="w-8 h-8 bg-blue-500/20 text-blue-400 rounded-lg flex items-center justify-center text-sm">1.2</span>
+          Quina utilitat té la IA en les empreses?
+        </h3>
+
+        <div class="bg-white/5 border border-white/10 rounded-2xl overflow-hidden">
+          <div class="overflow-x-auto">
+            <table class="w-full">
+              <thead>
+                <tr class="bg-white/5">
+                  <th class="text-left px-6 py-4 text-cyan-400 font-semibold">Sector</th>
+                  <th class="text-left px-6 py-4 text-cyan-400 font-semibold">Utilitat de la IA</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-white/10">
+                <tr class="hover:bg-white/5">
+                  <td class="px-6 py-4 font-medium">Màrqueting</td>
+                  <td class="px-6 py-4 text-white/70">Anàlisi de perfil comprador, chatbots, recomanacions personalitzades</td>
+                </tr>
+                <tr class="hover:bg-white/5">
+                  <td class="px-6 py-4 font-medium">Recursos Humans</td>
+                  <td class="px-6 py-4 text-white/70">Selecció de candidats, gestió del personal</td>
+                </tr>
+                <tr class="hover:bg-white/5">
+                  <td class="px-6 py-4 font-medium">Educació</td>
+                  <td class="px-6 py-4 text-white/70">Cursos personalitzats adaptats al ritme de cada alumne</td>
+                </tr>
+                <tr class="hover:bg-white/5">
+                  <td class="px-6 py-4 font-medium">Medicina</td>
+                  <td class="px-6 py-4 text-white/70">Anàlisi de dades genètiques, tractaments personalitzats</td>
+                </tr>
+                <tr class="hover:bg-white/5">
+                  <td class="px-6 py-4 font-medium">Finances</td>
+                  <td class="px-6 py-4 text-white/70">Detecció de frau, predicció de mercats</td>
+                </tr>
+                <tr class="hover:bg-white/5">
+                  <td class="px-6 py-4 font-medium">Logística</td>
+                  <td class="px-6 py-4 text-white/70">Optimització de rutes, prevenció de col·lisions</td>
+                </tr>
+                <tr class="hover:bg-white/5">
+                  <td class="px-6 py-4 font-medium">Agricultura</td>
+                  <td class="px-6 py-4 text-white/70">Monitoratge de cultius, optimització d'aigua i energia</td>
+                </tr>
+                <tr class="hover:bg-white/5">
+                  <td class="px-6 py-4 font-medium">Turisme</td>
+                  <td class="px-6 py-4 text-white/70">Traducció simultània, experiències immersives amb RV</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Empreses líders -->
+      <div class="bg-gradient-to-br from-white/5 to-transparent border border-white/10 rounded-2xl p-6">
+        <h4 class="text-xl font-bold mb-6">Empreses líders en Intel·ligència Artificial</h4>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+          <div class="text-center p-3 bg-white/5 rounded-lg">
+            <p class="font-semibold text-sm">Microsoft</p>
+            <p class="text-xs text-cyan-400 font-mono mt-1">18.365</p>
+          </div>
+          <div class="text-center p-3 bg-white/5 rounded-lg">
+            <p class="font-semibold text-sm">IBM</p>
+            <p class="text-xs text-cyan-400 font-mono mt-1">15.046</p>
+          </div>
+          <div class="text-center p-3 bg-white/5 rounded-lg">
+            <p class="font-semibold text-sm">Samsung</p>
+            <p class="text-xs text-cyan-400 font-mono mt-1">11.243</p>
+          </div>
+          <div class="text-center p-3 bg-white/5 rounded-lg">
+            <p class="font-semibold text-sm">Qualcomm</p>
+            <p class="text-xs text-cyan-400 font-mono mt-1">10.178</p>
+          </div>
+          <div class="text-center p-3 bg-white/5 rounded-lg">
+            <p class="font-semibold text-sm">Google</p>
+            <p class="text-xs text-cyan-400 font-mono mt-1">9.536</p>
+          </div>
+          <div class="text-center p-3 bg-white/5 rounded-lg">
+            <p class="font-semibold text-sm">Philips</p>
+            <p class="text-xs text-cyan-400 font-mono mt-1">7.023</p>
+          </div>
+          <div class="text-center p-3 bg-white/5 rounded-lg">
+            <p class="font-semibold text-sm">Siemens</p>
+            <p class="text-xs text-cyan-400 font-mono mt-1">6.192</p>
+          </div>
+          <div class="text-center p-3 bg-white/5 rounded-lg">
+            <p class="font-semibold text-sm">Sony</p>
+            <p class="text-xs text-cyan-400 font-mono mt-1">5.526</p>
+          </div>
+        </div>
+        <p class="text-center text-white/50 text-sm mt-4">Nombre de patents en IA (dades aproximades)</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider max-w-5xl mx-auto"></div>
+
+  <!-- 2. APLICACIONS -->
+  <section id="aplicacions" class="py-20 px-4">
+    <div class="max-w-5xl mx-auto">
+      <div class="mb-8">
+        <span class="text-cyan-400 text-sm font-mono tracking-wider">2. APLICACIONS DE LA IA</span>
+        <h2 class="text-4xl font-bold mt-2">Tecnologies <span class="gradient-text">Integrades</span></h2>
+        <p class="text-white/70 mt-4 text-lg">
+          La IA tendeix a combinar-se amb diferents tecnologies per aprofitar al màxim les possibilitats que ofereixen.
+        </p>
+      </div>
+
+      <!-- Tabs per aplicacions -->
+      <div class="flex flex-wrap gap-2 mb-6" id="app-tabs">
+        <button onclick="showApp('robotica')" class="app-tab px-4 py-2 rounded-lg bg-cyan-500 text-black font-medium text-sm transition-all" data-app="robotica">Robòtica</button>
+        <button onclick="showApp('impresion')" class="app-tab px-4 py-2 rounded-lg bg-white/10 text-white/70 hover:bg-white/20 font-medium text-sm transition-all" data-app="impresion">Impressió 3D</button>
+        <button onclick="showApp('biometria')" class="app-tab px-4 py-2 rounded-lg bg-white/10 text-white/70 hover:bg-white/20 font-medium text-sm transition-all" data-app="biometria">Biometria</button>
+        <button onclick="showApp('rvra')" class="app-tab px-4 py-2 rounded-lg bg-white/10 text-white/70 hover:bg-white/20 font-medium text-sm transition-all" data-app="rvra">RV/RA</button>
+        <button onclick="showApp('iot')" class="app-tab px-4 py-2 rounded-lg bg-white/10 text-white/70 hover:bg-white/20 font-medium text-sm transition-all" data-app="iot">IoT</button>
+        <button onclick="showApp('blockchain')" class="app-tab px-4 py-2 rounded-lg bg-white/10 text-white/70 hover:bg-white/20 font-medium text-sm transition-all" data-app="blockchain">Blockchain</button>
+        <button onclick="showApp('nuvol')" class="app-tab px-4 py-2 rounded-lg bg-white/10 text-white/70 hover:bg-white/20 font-medium text-sm transition-all" data-app="nuvol">El Núvol</button>
+      </div>
+
+      <!-- Contingut de cada aplicació -->
+      <div id="app-content">
+        <!-- Robòtica -->
+        <div id="robotica" class="app-panel">
+          <div class="bg-white/5 border border-white/10 rounded-2xl p-6">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="p-3 bg-cyan-500/10 rounded-xl">
+                <i data-lucide="bot" class="w-7 h-7 text-cyan-400"></i>
+              </div>
+              <div>
+                <span class="text-sm text-cyan-400/70">2.1</span>
+                <h3 class="text-2xl font-bold">Robòtica i IA</h3>
+              </div>
+            </div>
+            <p class="text-white/70 mb-4">
+              La fusió de la intel·ligència artificial i els robots està creant realitats sorprenents. <strong class="text-cyan-400">Japó</strong> és un dels països líders en robòtica.
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
+              <div class="bg-white/5 rounded-lg p-4">
+                <h4 class="font-semibold text-cyan-400 mb-2">Robots humanoides</h4>
+                <p class="text-sm text-white/70">Caminar, córrer, pujar escales, manipular objectes</p>
+              </div>
+              <div class="bg-white/5 rounded-lg p-4">
+                <h4 class="font-semibold text-cyan-400 mb-2">Robots agrícoles</h4>
+                <p class="text-sm text-white/70">Visió per ordinador i aprenentatge automàtic</p>
+              </div>
+              <div class="bg-white/5 rounded-lg p-4">
+                <h4 class="font-semibold text-cyan-400 mb-2">Robots artistes</h4>
+                <p class="text-sm text-white/70">Creen obres d'art úniques i composicions musicals</p>
+              </div>
+              <div class="bg-white/5 rounded-lg p-4">
+                <h4 class="font-semibold text-cyan-400 mb-2">Robots socials</h4>
+                <p class="text-sm text-white/70">Reconeixen emocions, parlen diversos idiomes</p>
+              </div>
+            </div>
+            <div class="bg-cyan-500/10 border-l-2 border-cyan-400 rounded-r-lg p-4">
+              <p class="text-sm text-white/80">
+                <strong>Exemple:</strong> <span class="text-cyan-400">Paro</span> és una foca terapèutica dissenyada per interactuar amb persones grans, alleujar l'estrès i millorar el benestar emocional.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Impressió 3D -->
+        <div id="impresion" class="app-panel hidden">
+          <div class="bg-white/5 border border-white/10 rounded-2xl p-6">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="p-3 bg-blue-500/10 rounded-xl">
+                <i data-lucide="box" class="w-7 h-7 text-blue-400"></i>
+              </div>
+              <div>
+                <span class="text-sm text-blue-400/70">2.2</span>
+                <h3 class="text-2xl font-bold">Impressió 3D i IA</h3>
+              </div>
+            </div>
+            <p class="text-white/70 mb-4">
+              La combinació d'<strong>impressió 3D</strong> i <strong>intel·ligència artificial</strong> potencia les possibilitats de la fabricació additiva.
+            </p>
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-4">
+              <div class="flex items-center gap-2 bg-white/5 rounded-lg p-3">
+                <span class="text-blue-400">✓</span>
+                <span class="text-sm text-white/80">Creació del disseny CAD</span>
+              </div>
+              <div class="flex items-center gap-2 bg-white/5 rounded-lg p-3">
+                <span class="text-blue-400">✓</span>
+                <span class="text-sm text-white/80">Elecció de materials</span>
+              </div>
+              <div class="flex items-center gap-2 bg-white/5 rounded-lg p-3">
+                <span class="text-blue-400">✓</span>
+                <span class="text-sm text-white/80">Supervisió del procés</span>
+              </div>
+              <div class="flex items-center gap-2 bg-white/5 rounded-lg p-3">
+                <span class="text-blue-400">✓</span>
+                <span class="text-sm text-white/80">Predicció del rendiment</span>
+              </div>
+              <div class="flex items-center gap-2 bg-white/5 rounded-lg p-3">
+                <span class="text-blue-400">✓</span>
+                <span class="text-sm text-white/80">Prototips ràpids</span>
+              </div>
+              <div class="flex items-center gap-2 bg-white/5 rounded-lg p-3">
+                <span class="text-blue-400">✓</span>
+                <span class="text-sm text-white/80">Personalització</span>
+              </div>
+            </div>
+            <div class="bg-blue-500/10 border-l-2 border-blue-400 rounded-r-lg p-4">
+              <p class="text-sm text-white/80">
+                <strong>Cas pràctic:</strong> <span class="text-blue-400">Astro</span> és un gos robot imprès en 3D equipat amb sensors, radar i IA, creat per treballar en la lluita contra el crim.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Biometria -->
+        <div id="biometria" class="app-panel hidden">
+          <div class="bg-white/5 border border-white/10 rounded-2xl p-6">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="p-3 bg-purple-500/10 rounded-xl">
+                <i data-lucide="fingerprint" class="w-7 h-7 text-purple-400"></i>
+              </div>
+              <div>
+                <span class="text-sm text-purple-400/70">2.3</span>
+                <h3 class="text-2xl font-bold">Biometria i IA</h3>
+              </div>
+            </div>
+            <p class="text-white/70 mb-4">
+              La <strong>biometria</strong> i la <strong>IA</strong> convergeixen per impulsar avenços significatius en <span class="text-purple-400">seguretat</span> i <span class="text-purple-400">identificació</span>.
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+              <div class="bg-white/5 rounded-lg p-4">
+                <h4 class="font-semibold text-purple-400 mb-2">Biometria Multimodal</h4>
+                <p class="text-sm text-white/70">Integra múltiples modalitats: reconeixement facial, veu i empremtes digitals.</p>
+              </div>
+              <div class="bg-white/5 rounded-lg p-4">
+                <h4 class="font-semibold text-purple-400 mb-2">Biometria Comportamental</h4>
+                <p class="text-sm text-white/70">Analitza la manera de caminar, la signatura manuscrita o l'estil d'escriptura.</p>
+              </div>
+            </div>
+            <div class="bg-purple-500/10 border-l-2 border-purple-400 rounded-r-lg p-4">
+              <p class="text-sm text-white/80">
+                <strong>Avanç revolucionari:</strong> Noves IA poden desxifrar emocions a través d'ones wifi o de ràdio, analitzant el ritme respiratori i la freqüència cardíaca.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- RV/RA -->
+        <div id="rvra" class="app-panel hidden">
+          <div class="bg-white/5 border border-white/10 rounded-2xl p-6">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="p-3 bg-green-500/10 rounded-xl">
+                <i data-lucide="glasses" class="w-7 h-7 text-green-400"></i>
+              </div>
+              <div>
+                <span class="text-sm text-green-400/70">2.4</span>
+                <h3 class="text-2xl font-bold">RV, RA i IA</h3>
+              </div>
+            </div>
+            <p class="text-white/70 mb-4">
+              La <strong>realitat virtual</strong> i <strong>realitat augmentada</strong>, potenciades amb IA, estan donant forma a experiències immersives.
+            </p>
+            <div class="space-y-3 mb-4">
+              <div class="flex items-start gap-3 bg-white/5 rounded-lg p-3">
+                <span class="w-6 h-6 bg-green-500/20 text-green-400 rounded flex items-center justify-center text-xs font-bold">1</span>
+                <div><span class="font-semibold text-white">Educació:</span> <span class="text-white/70 text-sm">Entorns virtuals que simulen situacions professionals</span></div>
+              </div>
+              <div class="flex items-start gap-3 bg-white/5 rounded-lg p-3">
+                <span class="w-6 h-6 bg-green-500/20 text-green-400 rounded flex items-center justify-center text-xs font-bold">2</span>
+                <div><span class="font-semibold text-white">Ulleres intel·ligents:</span> <span class="text-white/70 text-sm">Informació pràctica mentre caminem o treballem</span></div>
+              </div>
+              <div class="flex items-start gap-3 bg-white/5 rounded-lg p-3">
+                <span class="w-6 h-6 bg-green-500/20 text-green-400 rounded flex items-center justify-center text-xs font-bold">3</span>
+                <div><span class="font-semibold text-white">Esdeveniments:</span> <span class="text-white/70 text-sm">Experiències immersives i personalitzades</span></div>
+              </div>
+              <div class="flex items-start gap-3 bg-white/5 rounded-lg p-3">
+                <span class="w-6 h-6 bg-green-500/20 text-green-400 rounded flex items-center justify-center text-xs font-bold">4</span>
+                <div><span class="font-semibold text-white">Salut mental:</span> <span class="text-white/70 text-sm">Simulació d'escenaris per superar estrès i ansietat</span></div>
+              </div>
+            </div>
+            <div class="bg-green-500/10 border-l-2 border-green-400 rounded-r-lg p-4">
+              <p class="text-sm text-white/80">
+                <strong>Exemple:</strong> <span class="text-green-400">Chiara</span> és un simulador de RV que ajuda a millorar l'habilitat de parlar en públic.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- IoT -->
+        <div id="iot" class="app-panel hidden">
+          <div class="bg-white/5 border border-white/10 rounded-2xl p-6">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="p-3 bg-orange-500/10 rounded-xl">
+                <i data-lucide="wifi" class="w-7 h-7 text-orange-400"></i>
+              </div>
+              <div>
+                <span class="text-sm text-orange-400/70">2.5</span>
+                <h3 class="text-2xl font-bold">IoT i IA</h3>
+              </div>
+            </div>
+            <p class="text-white/70 mb-4">
+              La combinació d'<strong>Internet de les Coses (IoT)</strong> i <strong>IA</strong> potencia l'efectivitat de qualsevol sector professional.
+            </p>
+            <div class="bg-white/5 rounded-lg p-4 mb-4">
+              <h4 class="font-semibold text-orange-400 mb-3">Exemple: Singapur - Ciutat Intel·ligent</h4>
+              <ul class="space-y-2 text-white/70 text-sm">
+                <li class="flex items-start gap-2">
+                  <span class="text-orange-400">📡</span>
+                  <span>Xarxa de sensors que monitoritzen consum energètic i residus en temps real</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-orange-400">🏥</span>
+                  <span>Teleassistència mèdica a domicili per persones amb mobilitat reduïda</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-orange-400">🔒</span>
+                  <span>Sistemes de seguretat intel·ligent que han reduït els delictes</span>
+                </li>
+              </ul>
+            </div>
+            <div class="bg-orange-500/10 border-l-2 border-orange-400 rounded-r-lg p-4">
+              <p class="text-sm text-white/80">
+                <strong>Cas pràctic:</strong> Companyies d'assegurances poden utilitzar wearables per conèixer l'estat de salut dels clients i ajustar les primes.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Blockchain -->
+        <div id="blockchain" class="app-panel hidden">
+          <div class="bg-white/5 border border-white/10 rounded-2xl p-6">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="p-3 bg-yellow-500/10 rounded-xl">
+                <i data-lucide="link" class="w-7 h-7 text-yellow-400"></i>
+              </div>
+              <div>
+                <span class="text-sm text-yellow-400/70">2.6</span>
+                <h3 class="text-2xl font-bold">Blockchain i IA</h3>
+              </div>
+            </div>
+            <p class="text-white/70 mb-4">
+              La tecnologia <strong>blockchain</strong> unida a la <strong>IA</strong> serveix per:
+            </p>
+            <div class="grid grid-cols-3 gap-4 mb-4">
+              <div class="bg-white/5 rounded-lg p-4 text-center">
+                <span class="text-3xl mb-2 block">🛡️</span>
+                <span class="text-white font-medium text-sm">Prevenir fraus</span>
+              </div>
+              <div class="bg-white/5 rounded-lg p-4 text-center">
+                <span class="text-3xl mb-2 block">🔍</span>
+                <span class="text-white font-medium text-sm">Millorar transparència</span>
+              </div>
+              <div class="bg-white/5 rounded-lg p-4 text-center">
+                <span class="text-3xl mb-2 block">🔐</span>
+                <span class="text-white font-medium text-sm">Seguretat en dades</span>
+              </div>
+            </div>
+            <div class="bg-yellow-500/10 border-l-2 border-yellow-400 rounded-r-lg p-4">
+              <p class="text-sm text-white/80">
+                Gràcies a ambdues tecnologies, la <strong>governança descentralitzada</strong> arribaria a ser una realitat, permetent la presa de decisions transparent en entorns locals.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- El Núvol -->
+        <div id="nuvol" class="app-panel hidden">
+          <div class="bg-white/5 border border-white/10 rounded-2xl p-6">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="p-3 bg-cyan-500/10 rounded-xl">
+                <i data-lucide="cloud" class="w-7 h-7 text-cyan-400"></i>
+              </div>
+              <div>
+                <span class="text-sm text-cyan-400/70">2.7</span>
+                <h3 class="text-2xl font-bold">El Núvol i la IA</h3>
+              </div>
+            </div>
+            <p class="text-white/70 mb-4">
+              La <strong>computació en el núvol</strong> recolzada per la IA ha transformat la manera en què emmagatzemem, processem i analitzem les dades.
+            </p>
+            <div class="space-y-3 mb-4">
+              <div class="flex items-center gap-3">
+                <span class="w-6 h-6 bg-cyan-500/20 text-cyan-400 rounded-full flex items-center justify-center text-xs font-bold">1</span>
+                <span class="text-white/70 text-sm">Infraestructura escalable per emmagatzemar grans quantitats de dades</span>
+              </div>
+              <div class="flex items-center gap-3">
+                <span class="w-6 h-6 bg-cyan-500/20 text-cyan-400 rounded-full flex items-center justify-center text-xs font-bold">2</span>
+                <span class="text-white/70 text-sm">Desenvolupament i desplegament de models d'IA sense gestionar infraestructura</span>
+              </div>
+              <div class="flex items-center gap-3">
+                <span class="w-6 h-6 bg-cyan-500/20 text-cyan-400 rounded-full flex items-center justify-center text-xs font-bold">3</span>
+                <span class="text-white/70 text-sm">Detecció de patrons anòmals en temps real per seguretat</span>
+              </div>
+              <div class="flex items-center gap-3">
+                <span class="w-6 h-6 bg-cyan-500/20 text-cyan-400 rounded-full flex items-center justify-center text-xs font-bold">4</span>
+                <span class="text-white/70 text-sm">Optimització de recursos adaptant la capacitat de processament</span>
+              </div>
+            </div>
+            <div class="bg-red-500/10 border-l-2 border-red-400 rounded-r-lg p-4">
+              <div class="flex items-start gap-2">
+                <i data-lucide="alert-triangle" class="w-5 h-5 text-red-400 mt-0.5"></i>
+                <p class="text-sm text-white/80">
+                  <strong>Alerta:</strong> Els experts alerten sobre els riscos de <strong>fake news</strong>. La IA pot manipular i fabricar contingut fals que es difon ràpidament pel núvol.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider max-w-5xl mx-auto"></div>
+
+  <!-- 3. NOVES FUNCIONS -->
+  <section id="noves" class="py-20 px-4">
+    <div class="max-w-5xl mx-auto">
+      <div class="mb-8">
+        <span class="text-cyan-400 text-sm font-mono tracking-wider">3. NOVES FUNCIONALITATS DE LA IA</span>
+        <h2 class="text-4xl font-bold mt-2">El Futur de la <span class="gradient-text">IA Generativa</span></h2>
+        <p class="text-white/70 mt-4 text-lg">
+          La <strong>IA generativa</strong> és una branca de la IA molt popular i en constant evolució, ja que permet crear nous continguts en diversos suports.
+        </p>
+      </div>
+
+      <!-- IA Generativa -->
+      <div class="bg-gradient-to-br from-white/5 to-transparent border border-white/10 rounded-2xl p-6 mb-8">
+        <div class="flex items-center gap-4 mb-6">
+          <div class="p-3 bg-cyan-500/10 rounded-xl">
+            <i data-lucide="sparkles" class="w-8 h-8 text-cyan-400"></i>
+          </div>
+          <div>
+            <h3 class="text-2xl font-bold">IA Generativa</h3>
+            <p class="text-white/60">Crea contingut nou després de rebre instruccions</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
+          <div class="bg-white/5 rounded-xl p-4 text-center">
+            <i data-lucide="message-square" class="w-8 h-8 text-cyan-400 mx-auto mb-3"></i>
+            <p class="font-semibold text-white mb-1">Text</p>
+            <p class="text-xs text-white/60">ChatGPT, Gemini</p>
+          </div>
+          <div class="bg-white/5 rounded-xl p-4 text-center">
+            <i data-lucide="image" class="w-8 h-8 text-cyan-400 mx-auto mb-3"></i>
+            <p class="font-semibold text-white mb-1">Imatges</p>
+            <p class="text-xs text-white/60">DALL-E, Midjourney</p>
+          </div>
+          <div class="bg-white/5 rounded-xl p-4 text-center">
+            <i data-lucide="music" class="w-8 h-8 text-cyan-400 mx-auto mb-3"></i>
+            <p class="font-semibold text-white mb-1">Àudio</p>
+            <p class="text-xs text-white/60">Música, veu sintètica</p>
+          </div>
+          <div class="bg-white/5 rounded-xl p-4 text-center">
+            <i data-lucide="code" class="w-8 h-8 text-cyan-400 mx-auto mb-3"></i>
+            <p class="font-semibold text-white mb-1">Codi</p>
+            <p class="text-xs text-white/60">GitHub Copilot</p>
+          </div>
+        </div>
+
+        <div class="bg-red-500/10 border border-red-500/30 rounded-xl p-4">
+          <div class="flex items-center gap-2 mb-3">
+            <i data-lucide="alert-circle" class="w-5 h-5 text-red-400"></i>
+            <h4 class="font-semibold text-red-400">Punts febles a considerar</h4>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+            <div class="flex items-center gap-2 text-white/70 text-sm"><span class="text-red-400">•</span>Errors de qualitat o precisió</div>
+            <div class="flex items-center gap-2 text-white/70 text-sm"><span class="text-red-400">•</span>Simplificació de situacions complexes</div>
+            <div class="flex items-center gap-2 text-white/70 text-sm"><span class="text-red-400">•</span>Possibles interpretacions incorrectes</div>
+            <div class="flex items-center gap-2 text-white/70 text-sm"><span class="text-red-400">•</span>Dependència de dades d'entrenament</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- IA Empàtica i Creativa -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div class="bg-white/5 border border-white/10 rounded-2xl p-6">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="p-3 bg-pink-500/10 rounded-xl">
+              <i data-lucide="heart" class="w-7 h-7 text-pink-400"></i>
+            </div>
+            <div>
+              <span class="text-sm text-pink-400/70">3.1</span>
+              <h3 class="text-xl font-bold">IA Empàtica i Emocional</h3>
+            </div>
+          </div>
+          <p class="text-white/70 mb-4">
+            S'han realitzat proves utilitzant algorismes de <strong class="text-pink-400">deep learning</strong> per simular la intervenció d'un terapeuta psicològic.
+          </p>
+          <div class="bg-white/5 rounded-xl p-4 mb-4">
+            <h4 class="font-semibold text-white mb-3">Avantatges observats:</h4>
+            <ul class="space-y-2 text-sm text-white/70">
+              <li class="flex items-start gap-2"><span class="text-pink-400">✓</span><span>Els pacients es senten més <strong>escoltats</strong> i <strong>compresos</strong></span></li>
+              <li class="flex items-start gap-2"><span class="text-pink-400">✓</span><span>No se senten <strong>jutjats</strong> ni apressats</span></li>
+              <li class="flex items-start gap-2"><span class="text-pink-400">✓</span><span>Més còmodes compartint informació <strong>privada</strong></span></li>
+              <li class="flex items-start gap-2"><span class="text-pink-400">✓</span><span>No comet errors per <strong>fatiga</strong> o <strong>oblits</strong></span></li>
+            </ul>
+          </div>
+          <div class="bg-pink-500/10 border-l-2 border-pink-400 rounded-r-lg p-3">
+            <p class="text-sm text-white/80">
+              <strong>Important:</strong> La IA <span class="text-pink-400">no pot substituir</span> al psicòleg, però sí pot <strong>col·laborar</strong> amb ell.
+            </p>
+          </div>
+        </div>
+
+        <div class="bg-white/5 border border-white/10 rounded-2xl p-6">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="p-3 bg-purple-500/10 rounded-xl">
+              <i data-lucide="palette" class="w-7 h-7 text-purple-400"></i>
+            </div>
+            <div>
+              <span class="text-sm text-purple-400/70">3.2</span>
+              <h3 class="text-xl font-bold">IA Creativa i Artística</h3>
+            </div>
+          </div>
+          <p class="text-white/70 mb-4">
+            Cada vegada més, es busca que la IA generi <strong>contingut únic i creatiu</strong>.
+          </p>
+          <div class="bg-white/5 rounded-xl p-4 mb-4">
+            <h4 class="font-semibold text-white mb-3">Creacions de la IA:</h4>
+            <div class="grid grid-cols-2 gap-2">
+              <div class="flex items-center gap-2 text-sm text-white/70"><span class="text-purple-400">🎨</span>Pintures i il·lustracions</div>
+              <div class="flex items-center gap-2 text-sm text-white/70"><span class="text-purple-400">🎨</span>Composicions musicals</div>
+              <div class="flex items-center gap-2 text-sm text-white/70"><span class="text-purple-400">🎨</span>Escriptura creativa</div>
+              <div class="flex items-center gap-2 text-sm text-white/70"><span class="text-purple-400">🎨</span>Disseny gràfic</div>
+              <div class="flex items-center gap-2 text-sm text-white/70"><span class="text-purple-400">🎨</span>Vídeo i animació</div>
+              <div class="flex items-center gap-2 text-sm text-white/70"><span class="text-purple-400">🎨</span>Escultura 3D</div>
+            </div>
+          </div>
+          <div class="bg-purple-500/10 border-l-2 border-purple-400 rounded-r-lg p-3">
+            <h4 class="font-semibold text-white mb-2 text-sm">Desafiaments ètics:</h4>
+            <ul class="text-sm text-white/70 space-y-1">
+              <li>• Qui té els <strong>drets d'autor</strong>?</li>
+              <li>• Pot un humà obtenir benefici pel treball d'una IA?</li>
+              <li>• Impacte en els <strong>artistes professionals</strong></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider max-w-5xl mx-auto"></div>
+
+  <!-- 4. MERCAT LABORAL -->
+  <section id="mercat" class="py-20 px-4">
+    <div class="max-w-5xl mx-auto">
+      <div class="mb-8">
+        <span class="text-cyan-400 text-sm font-mono tracking-wider">4. CANVIS EN EL MERCAT LABORAL</span>
+        <h2 class="text-4xl font-bold mt-2">Impacte en el <span class="gradient-text">Món del Treball</span></h2>
+        <p class="text-white/70 mt-4 text-lg">
+          Tots els avenços tecnològics importants tenen un impacte en el món laboral, de manera que el desenvolupament de la IA comportarà l'eliminació d'uns llocs de treball i la creació d'altres.
+        </p>
+      </div>
+
+      <!-- Exemple Boeing -->
+      <div class="bg-gradient-to-br from-white/5 to-transparent border border-white/10 rounded-2xl p-6 mb-8">
+        <div class="flex items-start gap-4">
+          <div class="p-3 bg-cyan-500/10 rounded-xl">
+            <i data-lucide="plane" class="w-8 h-8 text-cyan-400"></i>
+          </div>
+          <div class="flex-1">
+            <h3 class="text-xl font-bold text-white mb-2">Exemple: Boeing i els avions sense pilot</h3>
+            <p class="text-white/70 mb-4">
+              La indústria de l'aviació està avançant en el desenvolupament de vols de passatgers en <strong>avions autònoms</strong>. Boeing ja ha presentat el seu <span class="text-cyan-400">PAV (vehicle aeri autònom de passatgers)</span>.
+            </p>
+            <div class="bg-white/5 rounded-lg p-4">
+              <p class="text-sm text-white/70">
+                <strong>Característiques:</strong> Sistema d'enlairament i aterratge vertical (com els helicòpters), que li dóna versatilitat per iniciar i finalitzar un vol sense necessitar un aeroport ni una pista d'aterratge.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Estadístiques -->
+      <div class="bg-white/5 border border-white/10 rounded-2xl p-6 mb-8">
+        <h3 class="text-xl font-bold mb-6 flex items-center gap-3">
+          <i data-lucide="briefcase" class="w-6 h-6 text-cyan-400"></i>
+          Previsions del Mercat Laboral (2025-2030)
+        </h3>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div class="bg-white/5 rounded-xl p-6 text-center">
+            <i data-lucide="trending-down" class="w-10 h-10 text-red-400 mx-auto mb-3"></i>
+            <p class="text-3xl font-bold text-white mb-1">85M</p>
+            <p class="text-sm text-white/60">Llocs destruïts</p>
+          </div>
+          <div class="bg-white/5 rounded-xl p-6 text-center">
+            <i data-lucide="trending-up" class="w-10 h-10 text-green-400 mx-auto mb-3"></i>
+            <p class="text-3xl font-bold text-white mb-1">97M</p>
+            <p class="text-sm text-white/60">Llocs creats</p>
+          </div>
+          <div class="bg-white/5 rounded-xl p-6 text-center">
+            <i data-lucide="check-circle" class="w-10 h-10 text-cyan-400 mx-auto mb-3"></i>
+            <p class="text-3xl font-bold text-white mb-1">+58M</p>
+            <p class="text-sm text-white/60">Creació neta</p>
+          </div>
+        </div>
+        <p class="text-center text-white/50 text-sm mt-4">Dades estimades segons informes del Fòrum Econòmic Mundial</p>
+      </div>
+
+      <!-- IA en RRHH -->
+      <div class="bg-white/5 border border-white/10 rounded-2xl p-6 mb-8">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="p-3 bg-blue-500/10 rounded-xl">
+            <i data-lucide="users" class="w-7 h-7 text-blue-400"></i>
+          </div>
+          <div>
+            <h3 class="text-xl font-bold text-white">IA en Recursos Humans</h3>
+            <p class="text-white/60 text-sm">Aplicacions en la gestió de personal</p>
+          </div>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div class="bg-white/5 rounded-xl p-4">
+            <h4 class="font-semibold text-cyan-400 mb-3">Selecció de personal</h4>
+            <ul class="space-y-2">
+              <li class="flex items-start gap-2 text-sm text-white/70"><span class="text-cyan-400">•</span>Anàlisi de currículums amb big data</li>
+              <li class="flex items-start gap-2 text-sm text-white/70"><span class="text-cyan-400">•</span>Entrevistes virtuals amb anàlisi de llenguatge corporal</li>
+              <li class="flex items-start gap-2 text-sm text-white/70"><span class="text-cyan-400">•</span>Realitat virtual per recrear situacions professionals</li>
+            </ul>
+          </div>
+          <div class="bg-white/5 rounded-xl p-4">
+            <h4 class="font-semibold text-cyan-400 mb-3">Gestió del rendiment</h4>
+            <ul class="space-y-2">
+              <li class="flex items-start gap-2 text-sm text-white/70"><span class="text-cyan-400">•</span>Retroalimentació contínua i personalitzada</li>
+              <li class="flex items-start gap-2 text-sm text-white/70"><span class="text-cyan-400">•</span>Avaluacions objectives amb algorismes</li>
+              <li class="flex items-start gap-2 text-sm text-white/70"><span class="text-cyan-400">•</span>Control d'assistència i hores extraordinàries</li>
+            </ul>
+          </div>
+          <div class="bg-white/5 rounded-xl p-4">
+            <h4 class="font-semibold text-cyan-400 mb-3">Formació</h4>
+            <ul class="space-y-2">
+              <li class="flex items-start gap-2 text-sm text-white/70"><span class="text-cyan-400">•</span>Suggeriment de cursos segons necessitats</li>
+              <li class="flex items-start gap-2 text-sm text-white/70"><span class="text-cyan-400">•</span>Formació adaptada a cada treballador</li>
+              <li class="flex items-start gap-2 text-sm text-white/70"><span class="text-cyan-400">•</span>Entorns virtuals d'aprenentatge</li>
+            </ul>
+          </div>
+          <div class="bg-white/5 rounded-xl p-4">
+            <h4 class="font-semibold text-cyan-400 mb-3">Motivació</h4>
+            <ul class="space-y-2">
+              <li class="flex items-start gap-2 text-sm text-white/70"><span class="text-cyan-400">•</span>Enquestes de satisfacció automatitzades</li>
+              <li class="flex items-start gap-2 text-sm text-white/70"><span class="text-cyan-400">•</span>Detecció de canvis comportamentals</li>
+              <li class="flex items-start gap-2 text-sm text-white/70"><span class="text-cyan-400">•</span>Resolució precoç de conflictes</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Problema del Biaix -->
+      <div class="bg-gradient-to-r from-red-500/10 to-orange-500/10 border border-red-500/30 rounded-2xl p-6 mb-8">
+        <div class="flex items-start gap-4">
+          <i data-lucide="alert-triangle" class="w-8 h-8 text-red-400 mt-1"></i>
+          <div>
+            <h3 class="text-xl font-bold text-white mb-3">El Problema del Biaix</h3>
+            <p class="text-white/70 mb-4">
+              La IA s'ha utilitzat en la selecció de personal amb la intenció d'evitar el biaix que poden tenir els humans. No obstant això, <strong class="text-red-400">no ha estat així</strong>.
+            </p>
+            <div class="bg-white/5 rounded-lg p-4">
+              <p class="text-sm text-white/70">
+                <strong>Problema:</strong> La IA no va ser neutral perquè les dades amb les quals havia estat entrenada <strong>no eren objectives</strong>, ja que es basaven en les seleccions realitzades per personal de RRHH, que tenia els seus propis biaixos.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Reflexió -->
+      <div class="bg-gradient-to-br from-cyan-500/10 to-blue-500/10 border border-cyan-500/30 rounded-2xl p-6">
+        <h4 class="text-lg font-bold text-white mb-4 flex items-center gap-2">
+          <i data-lucide="building" class="w-5 h-5 text-cyan-400"></i>
+          Reflexió sobre el Futur
+        </h4>
+        <p class="text-white/80 mb-4">
+          T'imagines que la plantilla d'una empresa estigui dirigida per una intel·ligència artificial? Com seria sol·licitar un augment de sou o negociar les teves vacances amb un algorisme?
+        </p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div class="bg-white/5 rounded-lg p-4">
+            <h5 class="font-semibold text-cyan-400 mb-2">Avantatges</h5>
+            <ul class="space-y-1 text-sm text-white/70">
+              <li>• Decisions més objectives</li>
+              <li>• Millor satisfacció del personal</li>
+              <li>• Processos més eficients</li>
+            </ul>
+          </div>
+          <div class="bg-white/5 rounded-lg p-4">
+            <h5 class="font-semibold text-red-400 mb-2">Desavantatges</h5>
+            <ul class="space-y-1 text-sm text-white/70">
+              <li>• Pèrdua de contacte humà</li>
+              <li>• Possibles biaixos en algorismes</li>
+              <li>• Resistència al canvi</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider max-w-5xl mx-auto"></div>
+
+  <!-- 5. RECURSOS -->
+  <section id="recursos" class="py-20 px-4">
+    <div class="max-w-5xl mx-auto">
+      <div class="mb-8">
+        <span class="text-cyan-400 text-sm font-mono tracking-wider">5. RECURSOS DIGITALS</span>
+        <h2 class="text-4xl font-bold mt-2">Materials <span class="gradient-text">Complementaris</span></h2>
+        <p class="text-white/70 mt-4 text-lg">
+          Explora aquests recursos digitals per ampliar els teus coneixements sobre les aplicacions de la Intel·ligència Artificial.
+        </p>
+      </div>
+
+      <!-- Vídeos -->
+      <div class="mb-12">
+        <h3 class="text-2xl font-bold mb-6 flex items-center gap-3">
+          <i data-lucide="youtube" class="w-7 h-7 text-red-500"></i>
+          Vídeos Educatius (YouTube)
+        </h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <a href="https://www.youtube.com/watch?v=0yCJav9x-1o" target="_blank" class="bg-white/5 border border-white/10 rounded-xl overflow-hidden hover:border-red-500/50 transition-all group">
+            <div class="video-card flex items-center justify-center relative">
+              <i data-lucide="play-circle" class="w-12 h-12 text-white/80 group-hover:scale-110 transition-transform"></i>
+              <span class="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded">8:32</span>
+            </div>
+            <div class="p-4">
+              <h4 class="font-semibold text-white text-sm mb-1">Què és la Intel·ligència Artificial?</h4>
+              <p class="text-xs text-white/60">Introducció completa als conceptes bàsics</p>
+            </div>
+          </a>
+          <a href="https://www.youtube.com/watch?v=M8p7n8FzX7o" target="_blank" class="bg-white/5 border border-white/10 rounded-xl overflow-hidden hover:border-red-500/50 transition-all group">
+            <div class="video-card flex items-center justify-center relative">
+              <i data-lucide="play-circle" class="w-12 h-12 text-white/80 group-hover:scale-110 transition-transform"></i>
+              <span class="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded">10:15</span>
+            </div>
+            <div class="p-4">
+              <h4 class="font-semibold text-white text-sm mb-1">Robòtica i IA: El Futur</h4>
+              <p class="text-xs text-white/60">Com la robòtica transforma la indústria</p>
+            </div>
+          </a>
+          <a href="https://www.youtube.com/watch?v=2y5bE8f9G1k" target="_blank" class="bg-white/5 border border-white/10 rounded-xl overflow-hidden hover:border-red-500/50 transition-all group">
+            <div class="video-card flex items-center justify-center relative">
+              <i data-lucide="play-circle" class="w-12 h-12 text-white/80 group-hover:scale-110 transition-transform"></i>
+              <span class="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded">9:45</span>
+            </div>
+            <div class="p-4">
+              <h4 class="font-semibold text-white text-sm mb-1">IA en Medicina</h4>
+              <p class="text-xs text-white/60">Aplicacions en diagnòstic i tractaments</p>
+            </div>
+          </a>
+          <a href="https://www.youtube.com/watch?v=5r7t8u9i0o1" target="_blank" class="bg-white/5 border border-white/10 rounded-xl overflow-hidden hover:border-red-500/50 transition-all group">
+            <div class="video-card flex items-center justify-center relative">
+              <i data-lucide="play-circle" class="w-12 h-12 text-white/80 group-hover:scale-110 transition-transform"></i>
+              <span class="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded">7:20</span>
+            </div>
+            <div class="p-4">
+              <h4 class="font-semibold text-white text-sm mb-1">ChatGPT i IA Generativa</h4>
+              <p class="text-xs text-white/60">Descobreix els grans models de llenguatge</p>
+            </div>
+          </a>
+          <a href="https://www.youtube.com/watch?v=3q4w5e6r7t8" target="_blank" class="bg-white/5 border border-white/10 rounded-xl overflow-hidden hover:border-red-500/50 transition-all group">
+            <div class="video-card flex items-center justify-center relative">
+              <i data-lucide="play-circle" class="w-12 h-12 text-white/80 group-hover:scale-110 transition-transform"></i>
+              <span class="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded">11:30</span>
+            </div>
+            <div class="p-4">
+              <h4 class="font-semibold text-white text-sm mb-1">Ètica en la IA</h4>
+              <p class="text-xs text-white/60">Reflexions sobre els desafiaments ètics</p>
+            </div>
+          </a>
+          <a href="https://www.youtube.com/watch?v=9y8u7i6o5p4" target="_blank" class="bg-white/5 border border-white/10 rounded-xl overflow-hidden hover:border-red-500/50 transition-all group">
+            <div class="video-card flex items-center justify-center relative">
+              <i data-lucide="play-circle" class="w-12 h-12 text-white/80 group-hover:scale-110 transition-transform"></i>
+              <span class="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded">8:50</span>
+            </div>
+            <div class="p-4">
+              <h4 class="font-semibold text-white text-sm mb-1">El Futur del Treball</h4>
+              <p class="text-xs text-white/60">Com la IA transformarà el mercat laboral</p>
+            </div>
+          </a>
+          <a href="https://www.youtube.com/watch?v=2a3s4d5f6g7" target="_blank" class="bg-white/5 border border-white/10 rounded-xl overflow-hidden hover:border-red-500/50 transition-all group">
+            <div class="video-card flex items-center justify-center relative">
+              <i data-lucide="play-circle" class="w-12 h-12 text-white/80 group-hover:scale-110 transition-transform"></i>
+              <span class="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded">12:00</span>
+            </div>
+            <div class="p-4">
+              <h4 class="font-semibold text-white text-sm mb-1">Deep Learning Explicat</h4>
+              <p class="text-xs text-white/60">Entén les xarxes neuronals profundes</p>
+            </div>
+          </a>
+          <a href="https://www.youtube.com/watch?v=1q2w3e4r5t6" target="_blank" class="bg-white/5 border border-white/10 rounded-xl overflow-hidden hover:border-red-500/50 transition-all group">
+            <div class="video-card flex items-center justify-center relative">
+              <i data-lucide="play-circle" class="w-12 h-12 text-white/80 group-hover:scale-110 transition-transform"></i>
+              <span class="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded">9:10</span>
+            </div>
+            <div class="p-4">
+              <h4 class="font-semibold text-white text-sm mb-1">IA Creativa: Art i Música</h4>
+              <p class="text-xs text-white/60">Com la IA crea art i contingut creatiu</p>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <!-- Webs -->
+      <div>
+        <h3 class="text-2xl font-bold mb-6 flex items-center gap-3">
+          <i data-lucide="external-link" class="w-7 h-7 text-cyan-400"></i>
+          Webs Recomanades
+        </h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <a href="https://www.technologyreview.com/topic/artificial-intelligence/" target="_blank" class="flex items-start gap-4 bg-white/5 border border-white/10 rounded-xl p-5 hover:border-cyan-500/50 transition-all group">
+            <div class="p-3 bg-cyan-500/10 rounded-lg group-hover:bg-cyan-500/20 transition-colors">
+              <i data-lucide="file-text" class="w-6 h-6 text-cyan-400"></i>
+            </div>
+            <div class="flex-1">
+              <h4 class="font-semibold text-white group-hover:text-cyan-400 transition-colors mb-1">MIT Technology Review - IA</h4>
+              <p class="text-sm text-white/60">Notícies i articles sobre els últims avenços en IA</p>
+            </div>
+            <i data-lucide="external-link" class="w-5 h-5 text-white/40 group-hover:text-cyan-400 transition-colors"></i>
+          </a>
+          <a href="https://ai.google/" target="_blank" class="flex items-start gap-4 bg-white/5 border border-white/10 rounded-xl p-5 hover:border-cyan-500/50 transition-all group">
+            <div class="p-3 bg-cyan-500/10 rounded-lg group-hover:bg-cyan-500/20 transition-colors">
+              <i data-lucide="book-open" class="w-6 h-6 text-cyan-400"></i>
+            </div>
+            <div class="flex-1">
+              <h4 class="font-semibold text-white group-hover:text-cyan-400 transition-colors mb-1">Google AI</h4>
+              <p class="text-sm text-white/60">Recursos educatius i investigacions de Google sobre IA</p>
+            </div>
+            <i data-lucide="external-link" class="w-5 h-5 text-white/40 group-hover:text-cyan-400 transition-colors"></i>
+          </a>
+          <a href="https://openai.com/" target="_blank" class="flex items-start gap-4 bg-white/5 border border-white/10 rounded-xl p-5 hover:border-cyan-500/50 transition-all group">
+            <div class="p-3 bg-cyan-500/10 rounded-lg group-hover:bg-cyan-500/20 transition-colors">
+              <i data-lucide="external-link" class="w-6 h-6 text-cyan-400"></i>
+            </div>
+            <div class="flex-1">
+              <h4 class="font-semibold text-white group-hover:text-cyan-400 transition-colors mb-1">OpenAI</h4>
+              <p class="text-sm text-white/60">Desenvolupadors de ChatGPT i DALL-E</p>
+            </div>
+            <i data-lucide="external-link" class="w-5 h-5 text-white/40 group-hover:text-cyan-400 transition-colors"></i>
+          </a>
+          <a href="https://ai-4-all.org/" target="_blank" class="flex items-start gap-4 bg-white/5 border border-white/10 rounded-xl p-5 hover:border-cyan-500/50 transition-all group">
+            <div class="p-3 bg-cyan-500/10 rounded-lg group-hover:bg-cyan-500/20 transition-colors">
+              <i data-lucide="book-open" class="w-6 h-6 text-cyan-400"></i>
+            </div>
+            <div class="flex-1">
+              <h4 class="font-semibold text-white group-hover:text-cyan-400 transition-colors mb-1">AI4ALL</h4>
+              <p class="text-sm text-white/60">Educació en IA per a estudiants de tots els nivells</p>
+            </div>
+            <i data-lucide="external-link" class="w-5 h-5 text-white/40 group-hover:text-cyan-400 transition-colors"></i>
+          </a>
+          <a href="https://www.elementsofai.com/" target="_blank" class="flex items-start gap-4 bg-white/5 border border-white/10 rounded-xl p-5 hover:border-cyan-500/50 transition-all group">
+            <div class="p-3 bg-cyan-500/10 rounded-lg group-hover:bg-cyan-500/20 transition-colors">
+              <i data-lucide="file-text" class="w-6 h-6 text-cyan-400"></i>
+            </div>
+            <div class="flex-1">
+              <h4 class="font-semibold text-white group-hover:text-cyan-400 transition-colors mb-1">Elements of AI</h4>
+              <p class="text-sm text-white/60">Curs gratuït d'introducció a la IA</p>
+            </div>
+            <i data-lucide="external-link" class="w-5 h-5 text-white/40 group-hover:text-cyan-400 transition-colors"></i>
+          </a>
+          <a href="https://machinelearningmastery.com/" target="_blank" class="flex items-start gap-4 bg-white/5 border border-white/10 rounded-xl p-5 hover:border-cyan-500/50 transition-all group">
+            <div class="p-3 bg-cyan-500/10 rounded-lg group-hover:bg-cyan-500/20 transition-colors">
+              <i data-lucide="book-open" class="w-6 h-6 text-cyan-400"></i>
+            </div>
+            <div class="flex-1">
+              <h4 class="font-semibold text-white group-hover:text-cyan-400 transition-colors mb-1">Machine Learning Mastery</h4>
+              <p class="text-sm text-white/60">Tutorials i recursos per aprendre machine learning</p>
+            </div>
+            <i data-lucide="external-link" class="w-5 h-5 text-white/40 group-hover:text-cyan-400 transition-colors"></i>
+          </a>
+          <a href="https://www.kaggle.com/" target="_blank" class="flex items-start gap-4 bg-white/5 border border-white/10 rounded-xl p-5 hover:border-cyan-500/50 transition-all group">
+            <div class="p-3 bg-cyan-500/10 rounded-lg group-hover:bg-cyan-500/20 transition-colors">
+              <i data-lucide="external-link" class="w-6 h-6 text-cyan-400"></i>
+            </div>
+            <div class="flex-1">
+              <h4 class="font-semibold text-white group-hover:text-cyan-400 transition-colors mb-1">Kaggle</h4>
+              <p class="text-sm text-white/60">Plataforma de competicions i datasets d'IA</p>
+            </div>
+            <i data-lucide="external-link" class="w-5 h-5 text-white/40 group-hover:text-cyan-400 transition-colors"></i>
+          </a>
+          <a href="https://www.coursera.org/learn/ai-for-everyone" target="_blank" class="flex items-start gap-4 bg-white/5 border border-white/10 rounded-xl p-5 hover:border-cyan-500/50 transition-all group">
+            <div class="p-3 bg-cyan-500/10 rounded-lg group-hover:bg-cyan-500/20 transition-colors">
+              <i data-lucide="video" class="w-6 h-6 text-cyan-400"></i>
+            </div>
+            <div class="flex-1">
+              <h4 class="font-semibold text-white group-hover:text-cyan-400 transition-colors mb-1">Coursera - IA per a Tothom</h4>
+              <p class="text-sm text-white/60">Curs de Stanford sobre fonaments d'IA</p>
+            </div>
+            <i data-lucide="external-link" class="w-5 h-5 text-white/40 group-hover:text-cyan-400 transition-colors"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- Nota -->
+      <div class="mt-12 idea-clau rounded-r-xl p-6">
+        <p class="text-white/80">
+          <strong class="text-cyan-400">Nota:</strong> Tots els recursos han estat seleccionats per complementar els continguts d'aquesta unitat didàctica. Es recomana explorar-los per ampliar la comprensió sobre les aplicacions de la IA en diferents contextos.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-white/10 py-12 px-4">
+    <div class="max-w-5xl mx-auto">
+      <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+        <div class="flex items-center gap-3">
+          <i data-lucide="brain" class="w-8 h-8 text-cyan-400"></i>
+          <div>
+            <p class="font-bold text-lg">Unitat 8</p>
+            <p class="text-sm text-white/60">Aplicacions de la IA</p>
+          </div>
+        </div>
+        <div class="flex gap-6 text-sm text-white/60">
+          <a href="#intro" class="hover:text-cyan-400 transition-colors">Introducció</a>
+          <a href="#empreses" class="hover:text-cyan-400 transition-colors">Empreses</a>
+          <a href="#aplicacions" class="hover:text-cyan-400 transition-colors">Aplicacions</a>
+          <a href="#noves" class="hover:text-cyan-400 transition-colors">Noves Funcions</a>
+          <a href="#mercat" class="hover:text-cyan-400 transition-colors">Mercat Laboral</a>
+          <a href="#recursos" class="hover:text-cyan-400 transition-colors">Recursos</a>
+        </div>
+      </div>
+      <div class="mt-8 pt-8 border-t border-white/10 text-center text-white/40 text-sm">
+        <p>© 2025 Unitat 8 - Aplicacions de la IA. CFGM Digitalització.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JAVASCRIPT -->
+  <script>
+    // Inicialitzar icones Lucide
+    lucide.createIcons();
+
+    // Menú mòbil
+    function toggleMenu() {
+      const menu = document.getElementById('mobile-menu');
+      menu.classList.toggle('hidden');
+    }
+
+    // Tabs d'aplicacions
+    function showApp(appId) {
+      // Amagar tots els panells
+      document.querySelectorAll('.app-panel').forEach(panel => {
+        panel.classList.add('hidden');
+      });
+      
+      // Mostrar el panell seleccionat
+      document.getElementById(appId).classList.remove('hidden');
+      
+      // Actualitzar estil dels botons
+      document.querySelectorAll('.app-tab').forEach(tab => {
+        tab.classList.remove('bg-cyan-500', 'text-black');
+        tab.classList.add('bg-white/10', 'text-white/70');
+      });
+      
+      document.querySelector(`[data-app="${appId}"]`).classList.remove('bg-white/10', 'text-white/70');
+      document.querySelector(`[data-app="${appId}"]`).classList.add('bg-cyan-500', 'text-black');
+    }
+
+    // Animació d'entrada en scroll
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-fade-in');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('section > div').forEach(el => {
+      observer.observe(el);
+    });
+  </script>
+
+</body>
 </html>
